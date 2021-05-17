@@ -20,7 +20,7 @@ OBJ_B = $(SRC_B:.c=.o)
 
 CFLAGS = -Wall -Werror -Wextra
 
-CC = gcc
+CC = clang
 AR = ar
 ARFLAGS = -rcs
 
