@@ -6,21 +6,17 @@ size_t	ft_strlen(char *s)
 
 	i = 0;
 	while (s[i])
-	{
 		i++;
-	}
 	return (i);
 }
 
-size_t	ft_slen(char *s)
+size_t	ft_index(char *s)
 {
 	size_t	i;
 
 	i = 0;
 	while (s[i] && s[i] != '\n')
-	{
 		i++;
-	}
 	return (i);
 }
 
@@ -47,29 +43,24 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 
 void ft_sch(char *s)
 {
-	s = ft_memmove(s, &(s[ft_slen(s) + 1]), ft_strlen(s) - ft_slen(s));
+	s = ft_memmove(s, &(s[ft_index(s) + 1]), ft_strlen(s) - ft_index(s));
 }
 
 int	get_next_line(int fd, char **line)
 {
-	static char	s[BUFF_SIZE + 1];
+	char		s[BUFF_SIZE + 1] = "";
+	static char	*tmp = malloc(sizeof(char) * 1);
 	int			ret;
 
-	(void)(*line);
-	while (ft_strchr(s, ))
+	tmp[]
+	ret = 1;
+	while (ret > 0)
 	{
+		ret = read()
+
+
 
 
 	}
-	ret = read(fd, s, BUFF_SIZE);
-	s[ret] = '\0';
-	printf("i=|%zu|\n", ft_strlen(s));
-	printf("i=|%zu|\n", ft_slen(s));
-	printf("|%s|\n", s);
-	ft_sch(s);
-	printf("i=|%zu|\n", ft_slen(s));
-	printf("|%s|\n", s);
-	
-	
-	return (0);
+	return (1);
 }

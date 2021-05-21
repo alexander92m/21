@@ -14,4 +14,5 @@ size_t	ft_slen(char *s);
 void	*ft_memmove(void *dst, const void *src, size_t len);
 void	ft_sch(char *s);
 char	*ft_strchr(const char *s, int c);
+char	*ft_strjoi(char *s1, char *s2, size_t s2len);
 #endif

@@ -2,13 +2,13 @@
 
 int	main()
 {
-	char	*s;
+	char	*line;
 	int		fd = 0;
 	int		gnl;
 
 	fd = open("1", O_RDONLY);
-	gnl = get_next_line(fd, &s);
+	gnl = get_next_line(fd, &line);
 	close(fd);
-	printf("|%s|", s);
+	printf("ss=|%s|\n", line);
 	return (0);
 }

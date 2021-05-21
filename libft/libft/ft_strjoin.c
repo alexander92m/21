@@ -18,7 +18,7 @@ char	*ft_strjoin(char const *s1, char const *s2)
 
 	if (!s1)
 		return (NULL);
-	s3 = ft_calloc((ft_strlen(s1) + ft_strlen(s2)), sizeof(char));
+	s3 = ft_calloc((ft_strlen(s1) + ft_strlen(s2) + 1), sizeof(char));
 	if (NULL == s3)
 		return (NULL);
 	ft_strlcpy(s3, s1, 1 + ft_strlen(s1));
