@@ -41,22 +41,22 @@ void	*ft_memmove(void *dst, const void *src, size_t len)
 	return (dst);
 }
 
-void ft_sch(char *s)
+void ft_s_ch(char *bu)
 {
-	s = ft_memmove(s, &(s[ft_index(s) + 1]), ft_strlen(s) - ft_index(s));
+	bu = ft_memmove(s, &(s[ft_index(s) + 1]), ft_strlen(s) - ft_index(s));
 }
 
 int	get_next_line(int fd, char **line)
 {
-	char		s[BUFF_SIZE + 1] = "";
-	static char	*tmp = malloc(sizeof(char) * 1);
+	char		bu[BUFF_SIZE + 1];
+	static char	*tmp = NULL;
 	int			ret;
 
-	tmp[]
 	ret = 1;
 	while (ret > 0)
 	{
-		ret = read()
+		ret = read(fd, bu, BUFF_SIZE);
+		tmp = ft_strjoi(tmp, bu, BUFF_SIZE);
 
 
 
