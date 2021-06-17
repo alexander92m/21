@@ -39,12 +39,55 @@ char *ft_strjoi(char *s1, char *s2, size_t s2len)
 char	*ft_strdup (const char *s1)
 {
 	char	*s2;
+	int 	i;
 
-	s2 = malloc(ft_strlen(s1) + 1, sizeof(char));
+	i = 0;
+	s2 = malloc(ft_strlen(s1) + 1 * sizeof(char));
 	if (NULL == s2)
 		return (NULL);
-	while (i < ft_strlen(s1) + 1)
+	while ((size_t)i <= ft_strlen(s1))
 		s2[i] = '\0';
 	ft_memmove(s2, s1, ft_strlen(s1));
 	return (s2);
+}
+
+size_t	ft_strlen(const char *s)
+{
+	size_t	i;
+
+	i = 0;
+	while (s[i])
+		i++;
+	return (i);
+}
+
+// size_t	ft_index(char *s)
+// {
+// 	size_t	i;
+
+// 	i = 0;
+// 	while (s[i] && s[i] != '\n')
+// 		i++;
+// 	return (i);
+// }
+
+void	*ft_memmove(void *dst, const void *src, size_t len)
+{
+	size_t	i;
+
+	if (src > dst)
+	{
+		i = 0;
+		while (i < len)
+		{
+			((unsigned char *)dst)[i] = ((unsigned char *)src)[i];
+			i++;
+		}
+	}
+	else if (src < dst)
+	{
+		while (len-- > 0)
+			((unsigned char *)dst)[len] = ((unsigned char *)src)[len];
+	}
+	return (dst);
 }

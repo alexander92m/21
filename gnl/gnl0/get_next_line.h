@@ -9,10 +9,11 @@
 #include <fcntl.h>
 
 int		get_next_line(int fd, char **line);
-size_t	ft_strlen(char *s);
-size_t	ft_slen(char *s);
+size_t	ft_strlen(const char *s);
 void	*ft_memmove(void *dst, const void *src, size_t len);
-void	ft_sch(char *s);
 char	*ft_strchr(const char *s, int c);
 char	*ft_strjoi(char *s1, char *s2, size_t s2len);
+char	*ft_strdup(const char *s1);
+
+
 #endif

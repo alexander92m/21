@@ -50,7 +50,7 @@ int	get_next_line(int fd, char **line)
 	*line = ft_strdup("");
 	return (1);
 }
-int main()
+/*int main()
 {
 	char	*line;
 	int		fd;
@@ -68,3 +68,4 @@ int main()
 
 	
 }
+*/
