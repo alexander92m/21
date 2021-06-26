@@ -1,4 +1,4 @@
-#include "get_next_line.h"
+#include "get_next_line_bonus.h"
 
 void	*ft_memmove(void *dst, const void *src, size_t len)
 {
@@ -26,7 +26,7 @@ size_t	ft_strlen(char *s)
 	size_t	i;
 
 	i = 0;
-	while (s[i] != 0)
+	while (s[i])
 		i++;
 	return (i);
 }
@@ -34,13 +34,13 @@ size_t	ft_strlen(char *s)
 char	*ft_strjoi(char *s1, char *s2, size_t s2len)
 {
 	char	*s3;
-	
+
 	if (!s1)
 	{
-		s1 = malloc(1 * sizeof(char));
-		s1[ft_strlen(s1)] = '\0';
+		s1 = (char *)malloc(1 * sizeof(char));
+		s1[0] = '\0';
 	}
-	s3 = malloc(sizeof(char) * (ft_strlen(s1) + s2len + 1));
+	s3 = (char *)malloc(sizeof(char) * (ft_strlen(s1) + s2len + 1));
 	if (s3 == NULL)
 		return (NULL);
 	ft_memset(s3, 0, ft_strlen(s1) + s2len + 1);

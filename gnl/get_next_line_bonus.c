@@ -1,29 +1,4 @@
-#include "get_next_line.h"
-
-void	zeroer(char **ptr)
-{
-	int	i;
-
-	i = 0;
-	while ((*ptr)[i])
-	{
-		(*ptr)[i++] = 0;
-	}
-}
-
-void	freenator(char **ptr)
-{
-	int	i;
-
-	i = 0;
-	if (*ptr != NULL)
-	{
-		zeroer(ptr);
-		//(*ptr)[0] = 0;
-		free(*ptr);
-		*ptr = NULL;
-	}	
-}
+#include "get_next_line_bonus.h"
 
 void	buf_change(char *ptr)
 {
@@ -38,7 +13,7 @@ void	buf_change(char *ptr)
 		ptr[len - ind - 1] = 0;
 	}
 	else
-		zeroer(&ptr);
+		ptr[0] = 0;
 }
 
 void	next_line(char *bf, char **line, int fd, int *ret)
@@ -49,24 +24,20 @@ void	next_line(char *bf, char **line, int fd, int *ret)
 		{
 			*ret = read(fd, bf, BUFFER_SIZE);
 			bf[*ret] = 0;
-			
 		}
 		*ret = ft_strlen(bf);
 		if (*ret < 1)
 		{
-			
 			*line = ft_strjoi(*line, bf, *ret);
 			break ;
 		}
 		if (ft_index(bf, '\n') == -1)
 		{
-			
 			*line = ft_strjoi(*line, bf, *ret);
-			zeroer(&bf);
+			bf[0] = 0;
 		}
 		else
 		{
-			
 			*line = ft_strjoi(*line, bf, ft_index(bf, '\n'));
 			break ;
 		}
@@ -75,18 +46,16 @@ void	next_line(char *bf, char **line, int fd, int *ret)
 
 int	get_next_line(int fd, char **line)
 {
-	static char		buf[BUFFER_SIZE + 1];
+	static char		buf[10240][BUFFER_SIZE + 1];
 	int				ret;
 
-	//printf("p(line)=|%p|  ", *line);
 	if (!line || fd < 0 || read(fd, 0, 0) < 0 || BUFFER_SIZE <= 0)
 		return (-1);
-	freenator(line);
-	//printf("p(line)=|%p|  ", *line);
+	*line = malloc(1);
+	(*line)[0] = 0;
 	ret = 1;
-	next_line(buf, line, fd, &ret);
-	buf_change(buf);
-	//printf("p(line)=|%p|  ", *line);
+	next_line(buf[fd], line, fd, &ret);
+	buf_change(buf[fd]);
 	if (ret == 0)
 		return (0);
 	return (1);
