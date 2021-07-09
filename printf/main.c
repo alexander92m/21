@@ -4,11 +4,23 @@
 
 int	main(void)
 {
-	
-	char *s = "|privet|";
-	printf("printf %s\n", s);
-	ft_printf("|ft_printf|", s, "|asdasd|");
-	
+	char			c = 'Z';
+	int				d = -777;
+	int				*p = &d;
+	unsigned int	ui = 666;
+	int				x = 123;
+	int len1, len2;
+	(void)c;
+	(void)d;
+	(void)p;
+	(void)ui;
+	(void)x;
+
+	char			*s = "privet1 ";
+	//printf("len1=%d, len2=%d\n", ft_printf("1 %% c=%c s=%s p=%p, d=%d, i=%i\n", c, s, s, -228, -777), printf("1 %% c=%c s=%s p=%p, d=%d, i=%i\n", c, s, s, -228, -777));
+	len1 = ft_printf("1 %% c=%c s=%s p=%p, d=%d, i=%i, u=%u\n", c, s, s, -228, -777, -658);
+	len2 = printf("2 %% c=%c s=%s p=%p, d=%d, i=%i, u=%u\n", c, s, s, -228, -777, -658);
+	printf("len1=%d, len2=%d\n", len1, len2);
 }
 //cspdiuxX%
 // clang -Wall -Wextra -Werror -g main.c libftprintf.c && ./a.out

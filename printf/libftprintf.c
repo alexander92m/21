@@ -1,10 +1,12 @@
 #include "libftprintf.h"
 
-void	ft_putstr(char *str)
+void	ft_putstr(char *str, int *len)
 {
 	while (*str)
+	{
 		write(1, str++, 1);
-
+	(*len)++;
+	}
 }
 char	*ft_strdup (const char *s1)
 {
@@ -71,62 +73,143 @@ size_t	ft_strlen(const char *str)
 	return (i);
 }
 
-
-t_print *ft_initialise_tab(t_print *tab)                       
-{                       
-      tab->wdt = 0;        //we set everything to 0, false        
-      tab->prc = 0;                        
-      tab->zero = 0;                        
-      tab->pnt = 0;                        
-      tab->sign = 0;                        
-      tab->tl = 0;                        
-      tab->is_zero = 0;                        
-      tab->dash = 0;                        
-      tab->perc = 0;                        
-      tab->sp = 0;                        
-      return (tab);                       
-}
-void	ft_putchar(char c)
+void	ft_putchar(char c, int *len)
 {
 	write(1, &c, 1);
+	(*len)++;
 }
 
-void parse0(char c)
+int ifc(va_list ap, int *len)
 {
-	if (c != '%')
-		ft_putchar(c);
-	else
-	{
-		
-	}
+	char	c;
+
+	c = va_arg(ap, int);
+	ft_putchar(c, len);
+	return 1;
 }
+
+int ifs(va_list ap, int *len)
+{
+	char	*s;
+
+	s = va_arg(ap, char *);
+	ft_putstr(s, len);
+	return ft_strlen(s);
+}
+
+void ft_putnbr16(long int pA, int *len)
+{
+	long int	tmp;
+
+	if (pA > 15)
+	{
+		ft_putnbr16(pA / 16, len);
+	}
+	tmp = pA % 16;
+	if (tmp < 10)
+		ft_putchar('0' + tmp, len);
+	else
+		ft_putchar('a' + tmp - 10, len);
+
+}
+
+void ifp(va_list ap, int *len)
+{
+	void		*p;
+	long int	pA;
+
+	p = va_arg(ap, void *);
+	pA = (long int)p;
+	ft_putstr("0x", len);
+	ft_putnbr16(pA, len);
+}
+void ft_putnbr(long int d, int *len)
+{
+	long tmp;
+
+	if (d < 0)
+	{
+		if (d == -2147483648)
+		{
+			ft_putstr("-2", len);
+			d = 147483648;
+		} else
+		{
+			ft_putchar('-', len);
+			d = -d;
+		}
+	}
+	if (d > 9)
+	{
+		ft_putnbr(d / 10, len);
+	}
+	tmp = d % 10;
+	ft_putchar('0' + tmp, len);
+}
+
+void ifd(va_list ap, int *len)
+{
+	int	d;
+
+	d = va_arg(ap, int);
+	ft_putnbr(d, len);
+}
+
+void ifu(va_list ap, int *len)
+{
+	int	u;
+
+	u = va_arg(ap, unsigned int);
+	printf("ifu() u=%u\n", u);
+	ft_putnbr(u, len);
+}
+
+int printT(char c, va_list ap, int *len)
+{
+	(void)c;
+	(void)ap;
+	if (c == 'c')
+	{
+		ifc(ap, len);
+	} else if (c == 's')
+	{
+		ifs(ap, len);
+	} else if (c == 'p')
+	{
+		ifp(ap, len);
+	} else if (c == 'd' || c == 'i')
+	{
+		ifd(ap, len);
+	} else if (c == 'u')
+	{
+		ifu(ap, len);
+	}
+	return 0;
+}
+
 int ft_printf(const char *format, ...)
 {
-	t_print *tab;
 	int		i;
+	int		len;
 
-	i = 0;
-	tab = (t_print *)malloc(sizeof(t_print));                        
-	if (!tab)                         
-		return (-1);
-	tab = ft_initialise_tab(tab);
-	
-
-	while (format[i] != 0)
-	{
-		parse0(format[i++]);
-	}
-	// char *s = ft_strdup(format);
-	// ft_putstr(s);
-
+	len = 0;
+	i = -1;
 	va_list ap;
 	va_start(ap, format);
-	char *p = va_arg (ap, char *);
-	ft_putstr(p);
-
-	char *p2 = va_arg (ap, char *);
-	ft_putstr(p2);
-
+	while (format[++i] != 0)
+	{
+		if (format[i] != '%')
+		{
+			ft_putchar(format[i], &len);
+		} else if (format[i + 1] == '%')
+		{
+			ft_putchar('%', &len);
+			i++;
+		} else
+		{	
+			printT(format[++i], ap, &len);
+		}
+	}
 	va_end (ap);
-	return (0);
+	return (len);
 }
