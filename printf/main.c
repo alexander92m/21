@@ -4,23 +4,37 @@
 
 int	main(void)
 {
-	char			c = 'Z';
-	int				d = -777;
-	int				*p = &d;
+	char			c = 'a';
+	int				d = 2147;
 	unsigned int	ui = 666;
 	int				x = 123;
 	int len1, len2;
 	(void)c;
 	(void)d;
-	(void)p;
 	(void)ui;
 	(void)x;
 
-	char			*s = "privet1 ";
-	//printf("len1=%d, len2=%d\n", ft_printf("1 %% c=%c s=%s p=%p, d=%d, i=%i\n", c, s, s, -228, -777), printf("1 %% c=%c s=%s p=%p, d=%d, i=%i\n", c, s, s, -228, -777));
-	len1 = ft_printf("1 %% c=%c s=%s p=%p, d=%d, i=%i, u=%u\n", c, s, s, -228, -777, -658);
-	len2 = printf("2 %% c=%c s=%s p=%p, d=%d, i=%i, u=%u\n", c, s, s, -228, -777, -658);
-	printf("len1=%d, len2=%d\n", len1, len2);
+	char			*s = NULL;
+	char	*s2 = NULL;
+	// len1 = ft_printf("1 %% c=%c s=%s|s2=%s, p=%p, pN=%p, d=%d, i=%i, u=%u, x=%x, X=%X\n", c, s, s2, s2, s, d, -777, -1, -26564, -26);
+	// len2 = printf("1 %% c=%c s=%s|s2=%s, p=%p, pN=%p, d=%d, i=%i, u=%u, x=%x, X=%X\n", c, s, s2, s2, s, d, -777, -1, -26564, -26);
+	// ft_printf("len1=%d, len2=%d\n", len1, len2);
+	// len1 = ft_printf("%a \n");
+	// //len2 = printf("%a \n");
+	// ft_printf("len1=%d, len2=%d\n", len1, len2);
+	// len1 = ft_printf("fhfsh\n");
+	// len2 = printf("fhfsh\n");
+	// ft_printf("len1=%d, len2=%d\n", len1, len2);
+	len1 = ft_printf("%s\n", s);
+	len2 = printf("%s\n",s2);
+	ft_printf("len1=%d, len2=%d\n", len1, len2);
+	
+	// len1 = ft_printf("p=%p\n", s);
+	// len2 = printf("p=%p\n", s);
+	// ft_printf("len1=%d, len2=%d\n", len1, len2);
+	// len1 = ft_printf("p=%p\n", s);
+	// len2 = printf("p=%p\n", s);
+	// ft_printf("len1=%d, len2=%d\n", len1, len2);
+	
 }
-//cspdiuxX%
-// clang -Wall -Wextra -Werror -g main.c libftprintf.c && ./a.out
+// clang -Wall -Wextra -Werror -g main.c libftprintf.a && ./a.out

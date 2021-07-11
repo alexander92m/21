@@ -2,13 +2,16 @@ NAME = libftprintf.a
 
 LH = libftprintf.h
 
-SRC = 
-
-SRC_B = 
+SRC =	ft_printf.c\
+		fun_c.c\
+		fun_d_i.c\
+		fun_p.c\
+		fun_s.c\
+		fun_u.c\
+		fun_x.c\
+		fun_XX.c
 
 OBJ = $(SRC:.c=.o)
-
-OBJ_B = $(SRC_B:.c=.o)
 
 CFLAGS = -Wall -Werror -Wextra
 
@@ -31,8 +34,5 @@ clean :
 
 fclean : clean
 	rm -f $(NAME)
-
-bonus : $(OBJ_B)
-	$(AR) $(ARFLAGS) $(NAME) $?
 
 re : fclean all
