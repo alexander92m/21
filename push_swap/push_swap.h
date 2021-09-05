@@ -4,12 +4,20 @@
 # include <stdlib.h>
 #include <stdio.h>
 
+typedef struct	s_arrs
+{
+	int		*a;
+	int		lenA;
+	int		argc;
+	int		*b;
+	int		lenB;
+}				t_arrs;
+
 void	*ft_calloc(size_t count, size_t size);
 void	ft_bzero(void *s, size_t n);
 void	*ft_memset(void *b, int c, size_t len);
 void	ft_putstr_fd(char *s, int fd);
 void	ft_putchar_fd(char c, int fd);
-int		*create_a(int argc, char **argv);
 int		ft_atoi(const char *str);
 int		ft_isdigit(int c);
 size_t	ft_strlen(const char *str);
