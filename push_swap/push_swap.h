@@ -11,6 +11,18 @@ typedef struct	s_arrs
 	int		argc;
 	int		*b;
 	int		lenB;
+	int		cnts;
+	// int		cntSA;
+	// int		cntSB;
+	// int		cntSS;
+	// int		cntPA;
+	// int		cntPB;
+	// int		cntRA;
+	// int		cntRB;
+	// int		cntRR;
+	// int		cntRRA;
+	// int		cntRRB;
+	// int		cntRRR;
 }				t_arrs;
 
 void	*ft_calloc(size_t count, size_t size);
@@ -22,10 +34,19 @@ int		ft_atoi(const char *str);
 int		ft_isdigit(int c);
 size_t	ft_strlen(const char *str);
 size_t	ft_arrlen(int *a);
-void	sa(int *a);
-void	sb(int *b);
-void	ss(int *a, int *b);
-int		pa(int **a, int **b);
-int		pb(int **a, int **b);
+int		sa(t_arrs *arrs);
+int		sb(t_arrs *arrs);
+int		ss(t_arrs *arrs);
+int		pb(t_arrs *arrs);
+int		pa(t_arrs *arrs);
+int		ra(t_arrs *arrs);
+int		rb(t_arrs *arrs);
+int		rr(t_arrs *arrs);
+int		rra(t_arrs *arrs);
+int		rrb(t_arrs *arrs);
+int		rrr(t_arrs *arrs);
+int		sort(t_arrs *arrs);
+int		checkSort(t_arrs *arrs);
+int		sortBubbles(t_arrs *arrs);
 
 #endif
