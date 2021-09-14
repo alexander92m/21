@@ -1,24 +1,6 @@
 #include "push_swap.h"
 
-static void show_arrays(t_arrs *arrs)
-{
-	int i = 0;
 
-	printf("----------lenA=%d\n", arrs->lenA);
-	while (i < arrs->lenA)
-	{
-		printf("arrs->a[%d]=%d\n", i, (arrs->a)[i]);
-		i++;
-	}
-	i = 0;
-	printf("lenB=%d\n", arrs->lenB);
-	while (i < arrs->lenB)
-	{
-		printf("arrs->b[%d]=%d\n", i, arrs->b[i]);
-		i++;
-	}
-	printf("ОПЕРАЦИЙ: %d\n", arrs->cnts);
-}
 
 // swap first two elems of A
 int		sa(t_arrs *arrs)
@@ -255,24 +237,99 @@ int checkSort(t_arrs *arrs)
 	return (1);
 }
 
+int maxA(t_arrs *arrs)
+{
+	int	i;
+	int max;
+	int iMax;
+
+
+	iMax = -1;
+	max = -2147483648;
+	i = 0;
+	while (i < arrs->lenA)
+	{
+		if (arrs->a[i] > max)
+		{
+			max = arrs->a[i];
+			iMax = i;
+		}
+	}
+	return iMax;
+}
+
+int maxB(t_arrs *arrs)
+{
+	int	i;
+	int max;
+	int iMax;
+
+
+	iMax = -1;
+	max = -2147483648;
+	i = 0;
+	while (i < arrs->lenB)
+	{
+		if (arrs->b[i] > max)
+		{
+			max = arrs->b[i];
+			iMax = i;
+		}
+	}
+	return iMax;
+
+}
+
+int minA(t_arrs *arrs)
+{
+	int	i;
+	int min;
+	int iMin;
+
+
+	iMin = -1;
+	min = 2147483647;
+	i = 0;
+	while (i < arrs->lenA)
+	{
+		if (arrs->a[i] < min)
+		{
+			min = arrs->a[i];
+			iMin = i;
+		}
+	}
+	return (iMin);
+
+}
+
+int minB(t_arrs *arrs)
+{
+	int	i;
+	int min;
+	int iMin;
+
+
+	iMin = -1;
+	min = 2147483647;
+	i = 0;
+	while (i < arrs->lenB)
+	{
+		if (arrs->b[i] < min)
+		{
+			min = arrs->b[i];
+			iMin = i;
+		}
+	}
+	return (iMin);
+}
+
 int		sort(t_arrs *arrs)
 {
-	int *a;
-	int i;
 	
-	i = 0;
-	a = arrs->a;
-	while (i < 100 && checkSort(arrs) != 1)
+	
+	while (checkSort(arrs) != 1)
 	{
-		if (arrs->a[0] > arrs->a[1])
-		{
-			printf("                  sa\n");
-			sa(arrs);
-		} 
-		printf("                  ra\n");
-		ra(arrs);
-		show_arrays(arrs);	
-		i++;
+		
 	}
 	return (0);
 }

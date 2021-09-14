@@ -9,7 +9,7 @@
 
 
 //show arrays, must delete before push
-static void show_arrays(t_arrs *arrs)
+void show_arrays(t_arrs *arrs)
 {
 	int i = 0;
 
@@ -28,11 +28,6 @@ static void show_arrays(t_arrs *arrs)
 	}
 	printf("ОПЕРАЦИЙ: %d\n", arrs->cnts);
 }
-
-// static void		*initCnts(t_arrs *arrs)
-// {
-// 	arrs->
-// }
 
 //create started stacks(arrays)
 static t_arrs	*initS(int argc, char **argv)

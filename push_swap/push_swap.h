@@ -48,5 +48,11 @@ int		rrr(t_arrs *arrs);
 int		sort(t_arrs *arrs);
 int		checkSort(t_arrs *arrs);
 int		sortBubbles(t_arrs *arrs);
+void	show_arrays(t_arrs *arrs);
+int maxB(t_arrs *arrs);
+int maxB(t_arrs *arrs);
+int minA(t_arrs *arrs);
+int minB(t_arrs *arrs);
+
 
 #endif
