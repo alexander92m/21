@@ -281,6 +281,76 @@ int minA(t_arrs *arrs)
 	return (min);
 }
 
+int upper(t_arrs *arrs, int a)
+{
+	int i;
+
+	i = 0;
+	while (i < arrs->lenA)
+	{
+		if (a > arrs->a[i] && a < arrs->a[i + 1])
+		{
+			break ;
+		}
+		i++;
+	}
+	if (i > arrs->lenA - i)
+		return 1;
+	else
+		return 0;
+}
+
+int checkB(t_arrs *arrs)
+{
+	int i;
+	int b;
+	int j;
+	int min;
+	int	optB;
+	
+	min = 100500;
+	j = 0;
+	while (j < arrs->lenB)
+	{
+
+		i = 0;
+		// printf("QQ i=%d, j=%d, arrs->b[j]=%d\n", i, j, arrs->b[j]);
+		b = arrs->b[j];
+		while (i < arrs->lenA)
+		{
+			if (b > arrs->a[i] && b < arrs->a[i + 1])
+			{
+				break ;
+			}
+
+			i++;
+		}
+		if (i > arrs->lenA - i)
+		{
+			if (arrs->lenA - i < min)
+			{
+				min = arrs->lenA - i;
+				optB = b;
+				arrs->bRotUp = 0;
+			}
+			
+		}
+		else
+		{
+			if (i < min)
+			{
+				min = i;
+				optB = b;
+				arrs->bRotUp = 1;
+			}
+			
+		}
+		j++;
+	}
+	
+	return	optB;
+}
+
 int		sort(t_arrs *arrs)
 {
 	int max;
@@ -298,12 +368,36 @@ int		sort(t_arrs *arrs)
 	}
 	show_arrays(arrs);
 	
+	
 	while (arrs->lenB != 0)
 	{
+		
 		if (arrs->b[0] < arrs->a[0] && arrs->b[0] > arrs->a[arrs->lenA - 1])
 			pa(arrs);
 		else
-			rra(arrs);
+		{
+			
+			while (!(arrs->b[0] == checkB(arrs)))
+			{
+				
+				if (arrs->bRotUp)
+				{
+					
+					rb(arrs);
+				}
+				else
+				{
+					
+					rrb(arrs);
+				}
+				
+			}
+			
+			if (upper(arrs, arrs->b[0]))
+				rra(arrs);
+			else
+				ra(arrs);
+		}
 	}
 	printf("%d, %d\n", max, min);
 	show_arrays(arrs);
