@@ -13,6 +13,7 @@ typedef struct	s_arrs
 	int		lenB;
 	int		cnts;
 	int		bRotUp;
+	int		aRotUp;
 }				t_arrs;
 
 void	*ft_calloc(size_t count, size_t size);

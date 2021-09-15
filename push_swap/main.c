@@ -67,9 +67,37 @@ int main(int argc, char **argv)
 	show_arrays(arrs);
 	
 	printf("checksort %d\n", checkSort(arrs));
-	// sortBubbles(arrs);
 	sort(arrs);
 	
-	// printf("checksort %d\n", checkSort(arrs));
+	return (0);
+}
+
+int		sortBubbles(t_arrs *arrs)
+{
+	int *a;
+	int i;
+	int j;
+	int temp = 0;
+
+	i = 0;
+	j = arrs->lenA - 1;
+	a = arrs->a;
+	
+	while (j > 0)
+	{
+		i = 0;
+		while (i < j)
+		{
+			if (a[i] > a[i + 1])
+			{
+				arrs->cnts++;
+				temp = a[i];
+				a[i] = a[i + 1];
+				a[i + 1] = temp;
+			}
+			i++;
+		}
+		j--;
+	}
 	return (0);
 }

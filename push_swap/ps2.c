@@ -230,11 +230,19 @@ int checkSort(t_arrs *arrs)
 	{
 		if (arrs->a[i] > arrs->a[i + 1])
 		{
+			if (i > arrs->lenA - i)
+			{
+				return (-1);
+			}
+			else
+			{
+				return (1);
+			}
 			return (0);
 		}
 		i++;
 	}
-	return (1);
+	return (0);
 }
 
 int maxA(t_arrs *arrs)
@@ -314,7 +322,6 @@ int checkB(t_arrs *arrs)
 	{
 
 		i = 0;
-		// printf("QQ i=%d, j=%d, arrs->b[j]=%d\n", i, j, arrs->b[j]);
 		b = arrs->b[j];
 		while (i < arrs->lenA)
 		{
@@ -325,26 +332,56 @@ int checkB(t_arrs *arrs)
 
 			i++;
 		}
-		if (i > arrs->lenA - i)
+
+		if (i < arrs->lenA - i && j < arrs->lenB - j && i + j < min)
 		{
-			if (arrs->lenA - i < min)
-			{
-				min = arrs->lenA - i;
-				optB = b;
-				arrs->bRotUp = 0;
-			}
 			
+			min = i + j;
+			optB = b;
+			arrs->bRotUp = 1;
+			arrs->aRotUp = 1;
 		}
-		else
+		else if (i < arrs->lenA - i && j > arrs->lenB - j && i + arrs->lenB - j < min)
 		{
-			if (i < min)
-			{
-				min = i;
-				optB = b;
-				arrs->bRotUp = 1;
-			}
-			
+			min = i + j;
+			optB = b;
+			arrs->bRotUp = 0;
+			arrs->aRotUp = 1;
 		}
+		else if (i > arrs->lenA - i && j > arrs->lenB - j && arrs->lenA - i + arrs->lenB - j < min)
+		{
+			min = i + j;
+			optB = b;
+			arrs->bRotUp = 0;
+			arrs->aRotUp = 0;
+		}
+		else if (i > arrs->lenA - i && j < arrs->lenB - j && arrs->lenA - i + j < min)
+		{
+			min = i + j;
+			optB = b;
+			arrs->bRotUp = 1;
+			arrs->aRotUp = 0;
+		}
+		// if (i > arrs->lenA - i)
+		// {
+		// 	if (arrs->lenA - i < min)
+		// 	{
+		// 		min = arrs->lenA - i;
+		// 		optB = b;
+		// 		arrs->bRotUp = 0;
+		// 	}
+			
+		// }
+		// else
+		// {
+		// 	if (i < min)
+		// 	{
+		// 		min = i;
+		// 		optB = b;
+		// 		arrs->bRotUp = 1;
+		// 	}
+			
+		// }
 		j++;
 	}
 	
@@ -352,16 +389,11 @@ int checkB(t_arrs *arrs)
 }
 
 int		sort(t_arrs *arrs)
-{
-	int max;
-	int min;
-
-	max = maxA(arrs);
-	min = minA(arrs);
-	
+{	
+	int optB;
 	while (arrs->lenA > 2)
 	{
-		if (arrs->a[0] == max || arrs->a[0] == min)
+		if (arrs->a[0] == maxA(arrs) || arrs->a[0] == minA(arrs))
 			ra(arrs);
 		else
 			pb(arrs);
@@ -376,10 +408,10 @@ int		sort(t_arrs *arrs)
 			pa(arrs);
 		else
 		{
-			
-			while (!(arrs->b[0] == checkB(arrs)))
+			optB = checkB(arrs);
+			while (!(arrs->b[0] == optB))
 			{
-				
+				// printf("b[0]=%d, checkB=%d\n", arrs->b[0], optB);
 				if (arrs->bRotUp)
 				{
 					
@@ -392,49 +424,26 @@ int		sort(t_arrs *arrs)
 				}
 				
 			}
+			// show_arrays(arrs);
 			
-			if (upper(arrs, arrs->b[0]))
-				rra(arrs);
-			else
-				ra(arrs);
-		}
-	}
-	printf("%d, %d\n", max, min);
-	show_arrays(arrs);
-	while (checkSort(arrs) != 1)
-	{
-		rra(arrs);
-	}
-	show_arrays(arrs);
-	return (0);
-}
-
-int		sortBubbles(t_arrs *arrs)
-{
-	int *a;
-	int i;
-	int j;
-	int temp = 0;
-
-	i = 0;
-	j = arrs->lenA - 1;
-	a = arrs->a;
-	
-	while (j > 0)
-	{
-		i = 0;
-		while (i < j)
-		{
-			if (a[i] > a[i + 1])
+			while (!(arrs->b[0] < arrs->a[0] && arrs->b[0] > arrs->a[arrs->lenA - 1]))
 			{
-				arrs->cnts++;
-				temp = a[i];
-				a[i] = a[i + 1];
-				a[i + 1] = temp;
+				if (arrs->aRotUp)
+					ra(arrs);
+				else
+					rra(arrs);
 			}
-			i++;
+			
 		}
-		j--;
 	}
+	show_arrays(arrs);
+	while (checkSort(arrs) != 0)
+	{
+		if (checkSort(arrs) == 1)
+			ra(arrs);
+		else
+			rra(arrs);
+	}
+	show_arrays(arrs);
 	return (0);
 }
