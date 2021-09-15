@@ -12,17 +12,6 @@ typedef struct	s_arrs
 	int		*b;
 	int		lenB;
 	int		cnts;
-	// int		cntSA;
-	// int		cntSB;
-	// int		cntSS;
-	// int		cntPA;
-	// int		cntPB;
-	// int		cntRA;
-	// int		cntRB;
-	// int		cntRR;
-	// int		cntRRA;
-	// int		cntRRB;
-	// int		cntRRR;
 }				t_arrs;
 
 void	*ft_calloc(size_t count, size_t size);
@@ -49,7 +38,7 @@ int		sort(t_arrs *arrs);
 int		checkSort(t_arrs *arrs);
 int		sortBubbles(t_arrs *arrs);
 void	show_arrays(t_arrs *arrs);
-int maxB(t_arrs *arrs);
+int maxA(t_arrs *arrs);
 int maxB(t_arrs *arrs);
 int minA(t_arrs *arrs);
 int minB(t_arrs *arrs);

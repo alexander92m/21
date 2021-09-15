@@ -254,30 +254,9 @@ int maxA(t_arrs *arrs)
 			max = arrs->a[i];
 			iMax = i;
 		}
+		i++;
 	}
-	return iMax;
-}
-
-int maxB(t_arrs *arrs)
-{
-	int	i;
-	int max;
-	int iMax;
-
-
-	iMax = -1;
-	max = -2147483648;
-	i = 0;
-	while (i < arrs->lenB)
-	{
-		if (arrs->b[i] > max)
-		{
-			max = arrs->b[i];
-			iMax = i;
-		}
-	}
-	return iMax;
-
+	return max;
 }
 
 int minA(t_arrs *arrs)
@@ -297,40 +276,42 @@ int minA(t_arrs *arrs)
 			min = arrs->a[i];
 			iMin = i;
 		}
+		i++;
 	}
-	return (iMin);
-
-}
-
-int minB(t_arrs *arrs)
-{
-	int	i;
-	int min;
-	int iMin;
-
-
-	iMin = -1;
-	min = 2147483647;
-	i = 0;
-	while (i < arrs->lenB)
-	{
-		if (arrs->b[i] < min)
-		{
-			min = arrs->b[i];
-			iMin = i;
-		}
-	}
-	return (iMin);
+	return (min);
 }
 
 int		sort(t_arrs *arrs)
 {
+	int max;
+	int min;
+
+	max = maxA(arrs);
+	min = minA(arrs);
 	
+	while (arrs->lenA > 2)
+	{
+		if (arrs->a[0] == max || arrs->a[0] == min)
+			ra(arrs);
+		else
+			pb(arrs);
+	}
+	show_arrays(arrs);
 	
+	while (arrs->lenB != 0)
+	{
+		if (arrs->b[0] < arrs->a[0] && arrs->b[0] > arrs->a[arrs->lenA - 1])
+			pa(arrs);
+		else
+			rra(arrs);
+	}
+	printf("%d, %d\n", max, min);
+	show_arrays(arrs);
 	while (checkSort(arrs) != 1)
 	{
-		
+		rra(arrs);
 	}
+	show_arrays(arrs);
 	return (0);
 }
 

@@ -69,15 +69,7 @@ int main(int argc, char **argv)
 	printf("checksort %d\n", checkSort(arrs));
 	// sortBubbles(arrs);
 	sort(arrs);
-	// sa(arrs);
-	// ra(arrs);
-	// sa(arrs);
-	// ra(arrs);
-	// sa(arrs);
-	// ra(arrs);
-	// sa(arrs);
-	// ra(arrs);
-	// show_arrays(arrs);
-	printf("checksort %d\n", checkSort(arrs));
+	
+	// printf("checksort %d\n", checkSort(arrs));
 	return (0);
 }
