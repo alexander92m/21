@@ -38,18 +38,18 @@ static t_arrs	*initS(int argc, char **argv)
 	if (arrs == NULL)
 		return NULL;
 	arrs->argc = argc;
-	arrs->a = malloc((argc - 1) * sizeof(int));
-	if (arrs->a == NULL)
-		return NULL;
+	// arrs->a = malloc((argc - 1) * sizeof(int));
+	// if (arrs->a == NULL)
+	// 	return NULL;
 	printf("%d\n", argc);
 	while (argc-- > 1)
 		arrs->a[argc - 1] = ft_atoi(argv[argc]);
 	arrs->lenA = arrs->argc - 1;
 	arrs->lenB = 0;
 	argc = arrs->argc;
-	arrs->b = malloc((argc - 1) * sizeof(int));
-	if (arrs->b == NULL)
-		return NULL;
+	// arrs->b = malloc((argc - 1) * sizeof(int));
+	// if (arrs->b == NULL)
+	// 	return NULL;
 	while (argc--)
 		arrs->b[argc] = 0;
 	arrs->cnts = 0;

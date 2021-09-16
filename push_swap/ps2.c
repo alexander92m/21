@@ -230,7 +230,7 @@ int checkSort(t_arrs *arrs)
 	{
 		if (arrs->a[i] > arrs->a[i + 1])
 		{
-			if (i > arrs->lenA - i)
+			if (i > arrs->lenA - i - 1)
 			{
 				return (-1);
 			}
@@ -238,7 +238,6 @@ int checkSort(t_arrs *arrs)
 			{
 				return (1);
 			}
-			return (0);
 		}
 		i++;
 	}
@@ -289,38 +288,18 @@ int minA(t_arrs *arrs)
 	return (min);
 }
 
-int upper(t_arrs *arrs, int a)
-{
-	int i;
-
-	i = 0;
-	while (i < arrs->lenA)
-	{
-		if (a > arrs->a[i] && a < arrs->a[i + 1])
-		{
-			break ;
-		}
-		i++;
-	}
-	if (i > arrs->lenA - i)
-		return 1;
-	else
-		return 0;
-}
-
-int checkB(t_arrs *arrs)
+int rotate(t_arrs *arrs)
 {
 	int i;
 	int b;
 	int j;
 	int min;
-	int	optB;
+	int	optB = 0;
 	
 	min = 100500;
 	j = 0;
 	while (j < arrs->lenB)
 	{
-
 		i = 0;
 		b = arrs->b[j];
 		while (i < arrs->lenA)
@@ -329,68 +308,129 @@ int checkB(t_arrs *arrs)
 			{
 				break ;
 			}
-
 			i++;
 		}
-
-		if (i < arrs->lenA - i && j < arrs->lenB - j && i + j < min)
-		{
-			
-			min = i + j;
-			optB = b;
-			arrs->bRotUp = 1;
-			arrs->aRotUp = 1;
-		}
-		else if (i < arrs->lenA - i && j > arrs->lenB - j && i + arrs->lenB - j < min)
+		if (i < arrs->lenA - i - 1 && j < arrs->lenB - 1 - j && i + j < min)
 		{
 			min = i + j;
 			optB = b;
-			arrs->bRotUp = 0;
-			arrs->aRotUp = 1;
+			arrs->bRot = j;
+			arrs->aRot = i + 1;
 		}
-		else if (i > arrs->lenA - i && j > arrs->lenB - j && arrs->lenA - i + arrs->lenB - j < min)
+		else if (i < arrs->lenA - i - 1 && j > arrs->lenB - j - 1 && i + arrs->lenB - j - 1 < min)
 		{
-			min = i + j;
+			min = i + arrs->lenB - j - 1;
 			optB = b;
-			arrs->bRotUp = 0;
-			arrs->aRotUp = 0;
+			arrs->bRot = j - arrs->lenB - 1;
+			if (arrs->lenB < 3)
+				arrs->bRot = arrs->bRot + 3;
+			arrs->aRot = i + 1;
 		}
-		else if (i > arrs->lenA - i && j < arrs->lenB - j && arrs->lenA - i + j < min)
+		else if (i > arrs->lenA - 1 - i && j > arrs->lenB - 1 - j && arrs->lenA - i - 1 + arrs->lenB - j - 1 < min)
 		{
-			min = i + j;
+			min = arrs->lenA - i - 1 + arrs->lenB - j - 1;
 			optB = b;
-			arrs->bRotUp = 1;
-			arrs->aRotUp = 0;
+			arrs->bRot = j - 1 - arrs->lenB;
+			arrs->aRot = i - 1 - arrs->lenA + 1;
 		}
-		// if (i > arrs->lenA - i)
-		// {
-		// 	if (arrs->lenA - i < min)
-		// 	{
-		// 		min = arrs->lenA - i;
-		// 		optB = b;
-		// 		arrs->bRotUp = 0;
-		// 	}
-			
-		// }
-		// else
-		// {
-		// 	if (i < min)
-		// 	{
-		// 		min = i;
-		// 		optB = b;
-		// 		arrs->bRotUp = 1;
-		// 	}
-			
-		// }
+		else if (i > arrs->lenA - 1 - i && j < arrs->lenB - 1 - j && arrs->lenA - i - 1 + j < min)
+		{
+			min = arrs->lenA - i - 1 + j;
+			optB = b;
+			arrs->bRot = j;
+			arrs->aRot = i - 1 - arrs->lenA + 1;
+		}
 		j++;
 	}
-	
-	return	optB;
+	printf("da=%d, db=%d\n", arrs->aRot, arrs->bRot);
+	while (arrs->aRot != 0 || arrs->bRot != 0)
+	{
+		if (arrs->aRot > 0 && arrs->bRot > 0)
+		{
+			rr(arrs);
+			arrs->aRot--;
+			arrs->bRot--;
+		}
+		else if (arrs->aRot > 0 && arrs->bRot < 0)
+		{
+			ra(arrs);
+			rrb(arrs);
+			arrs->aRot--;
+			arrs->bRot++;
+		}
+		else if (arrs->aRot < 0 && arrs->bRot < 0)
+		{
+			rrr(arrs);
+			arrs->aRot++;
+			arrs->bRot++;
+		}
+		else if (arrs->aRot < 0 && arrs->bRot > 0)
+		{
+			rra(arrs);
+			rb(arrs);
+			arrs->aRot++;
+			arrs->bRot--;
+		}
+		else if (arrs->aRot > 0 && arrs->bRot == 0)
+		{
+			ra(arrs);
+			arrs->aRot--;
+		}
+		else if (arrs->aRot < 0 && arrs->bRot == 0)
+		{
+			rra(arrs);
+			arrs->aRot++;
+		}
+		else if (arrs->aRot == 0 && arrs->bRot > 0)
+		{
+			rb(arrs);
+			arrs->bRot--;
+		}
+		else if (arrs->aRot == 0 && arrs->bRot < 0)
+		{
+			rrb(arrs);
+			arrs->bRot++;
+		}
+		
+		
+	}
+	return	0;
+}
+
+int		LastB(t_arrs *arrs)
+{
+	int i;
+
+	i = 0;
+	while (i < arrs->lenA)
+	{
+		if (arrs->b[0] > arrs->a[i] && arrs->b[0] < arrs->a[i + 1])
+		{
+			if (i < arrs->lenA - i)
+			{
+				while (!(arrs->b[0] < arrs->a[0] && arrs->b[0] > arrs->a[arrs->lenA - 1]))
+				{
+					ra(arrs);
+				}
+				
+			}
+			else
+			{
+				while (!(arrs->b[0] < arrs->a[0] && arrs->b[0] > arrs->a[arrs->lenA - 1]))
+				{
+					rra(arrs);
+				}
+			}
+			pa(arrs);
+			break ;
+		}
+		i++;
+	}
+	return (0);
 }
 
 int		sort(t_arrs *arrs)
 {	
-	int optB;
 	while (arrs->lenA > 2)
 	{
 		if (arrs->a[0] == maxA(arrs) || arrs->a[0] == minA(arrs))
@@ -399,51 +439,30 @@ int		sort(t_arrs *arrs)
 			pb(arrs);
 	}
 	show_arrays(arrs);
-	
-	
-	while (arrs->lenB != 0)
+	while (arrs->lenB != 1)
 	{
 		
 		if (arrs->b[0] < arrs->a[0] && arrs->b[0] > arrs->a[arrs->lenA - 1])
 			pa(arrs);
 		else
-		{
-			optB = checkB(arrs);
-			while (!(arrs->b[0] == optB))
-			{
-				// printf("b[0]=%d, checkB=%d\n", arrs->b[0], optB);
-				if (arrs->bRotUp)
-				{
-					
-					rb(arrs);
-				}
-				else
-				{
-					
-					rrb(arrs);
-				}
-				
-			}
-			// show_arrays(arrs);
-			
-			while (!(arrs->b[0] < arrs->a[0] && arrs->b[0] > arrs->a[arrs->lenA - 1]))
-			{
-				if (arrs->aRotUp)
-					ra(arrs);
-				else
-					rra(arrs);
-			}
-			
-		}
+			rotate(arrs);
 	}
+
 	show_arrays(arrs);
+
+	LastB(arrs);
+
+	show_arrays(arrs);
+	
 	while (checkSort(arrs) != 0)
 	{
+		// printf("QQ  %d\n", checkSort(arrs));
 		if (checkSort(arrs) == 1)
 			ra(arrs);
 		else
 			rra(arrs);
 	}
+	
 	show_arrays(arrs);
 	return (0);
 }

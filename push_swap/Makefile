@@ -21,7 +21,7 @@ SRC =	main.c\
 
 OBJ = $(SRC:.c=.o)
 
-CFLAGS = -Wall -Werror -Wextra
+CFLAGS = -Wall -Werror -Wextra -g
 
 CC = clang
 AR = ar
