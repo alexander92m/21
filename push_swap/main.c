@@ -143,6 +143,7 @@ int	errorCheck(int argc, char **argv, t_arrs *arrs)
 	return (0);
 }
 
+// printf("PRIVET\n");
 //main
 int main(int argc, char **argv)
 {
@@ -157,10 +158,15 @@ int main(int argc, char **argv)
 	}
 	else  if (argc != 1 && checkSort(arrs) != 0)
 	{
-		sort(arrs);
-		// printf("if zero, that sorted %d\n", checkSort(arrs));
-		// show_arrays(arrs);
+		show_arrays(arrs);
+		if (arrs->lenA > 10)
+			sort(arrs);
+		else
+			altSort(arrs);
+		printf("if zero, that sorted %d\n", checkSort(arrs));
+		show_arrays(arrs);
 	}
+	
 	free(arrs);
 	arrs = NULL;
 	return (0);

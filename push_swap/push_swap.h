@@ -42,6 +42,7 @@ int		rra(t_arrs *arrs);
 int		rrb(t_arrs *arrs);
 int		rrr(t_arrs *arrs);
 int		sort(t_arrs *arrs);
+int		altSort(t_arrs *arrs);
 int		checkSort(t_arrs *arrs);
 int		sortBubbles(t_arrs *arrs);
 int		sortBubblesC(t_arrs *arrs);
