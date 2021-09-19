@@ -10,10 +10,15 @@ typedef struct	s_arrs
 	int		lenA;
 	int		argc;
 	int		b[5000];
+	int		c[5000];
 	int		lenB;
+	int		lenC;
 	int		cnts;
 	int		bRot;
 	int		aRot;
+	int		maxA;
+	int		minA;
+	int		midA;
 }				t_arrs;
 
 void	*ft_calloc(size_t count, size_t size);
@@ -39,6 +44,7 @@ int		rrr(t_arrs *arrs);
 int		sort(t_arrs *arrs);
 int		checkSort(t_arrs *arrs);
 int		sortBubbles(t_arrs *arrs);
+int		sortBubblesC(t_arrs *arrs);
 void	show_arrays(t_arrs *arrs);
 int rotate(t_arrs *arrs);
 int upper(t_arrs *arrs, int a);
@@ -46,6 +52,8 @@ int maxA(t_arrs *arrs);
 int maxB(t_arrs *arrs);
 int minA(t_arrs *arrs);
 int minB(t_arrs *arrs);
+int midA(t_arrs *arrs);
+int done1(t_arrs *arrs);
 
 
 #endif
