@@ -248,9 +248,7 @@ int		rrr(t_arrs *arrs)
 
 	return 0;
 }
-
-
-
+//																			  1
 int maxA(t_arrs *arrs)
 {
 	int	i;
@@ -420,7 +418,6 @@ int		LastB(t_arrs *arrs)
 				{
 					ra(arrs);
 				}
-				
 			}
 			else
 			{
@@ -458,28 +455,78 @@ int semiSort(t_arrs *arrs)
 
 }
 
-//  min <  числа < mid отсутствуют
+//  min <  arrs->a < mid отсутствуют
 int done1(t_arrs *arrs)
 {
 	int i;
 	int flag;
 
 	flag = 0;
-	i = 0;
-	while (!flag && i < arrs->lenA)
+	i = -1;
+	while (!flag && ++i < arrs->lenA)
 	{
 		if (arrs->a[i] > arrs->minA && arrs->a[i] < arrs->midA)
 		{
 			flag = 1;
 			break ;
 		}
-		i++;
 	}
 	return flag;
-	
 }
 
+
 int		sort(t_arrs *arrs)
+{	
+	while (done1(arrs))
+	{
+		
+		if (arrs->a[0] > arrs->minA && arrs->a[0] < arrs->midA)
+			pb(arrs);
+		else
+			ra(arrs);
+	}
+	while (arrs->lenA != 3)
+	{
+	
+		if (arrs->a[0] > arrs->midA && arrs->a[0] < arrs->maxA)
+			pb(arrs);
+		else
+			ra(arrs);
+	}	
+	while (1 == 1)
+	{
+		if (arrs->a[0] == arrs->midA)
+		{
+			if (arrs->a[1] != arrs->maxA)
+			{
+				sa(arrs);
+				break ;
+			}
+			else
+				break ;
+		}
+		else
+			ra(arrs);
+	}
+	while (arrs->lenB != 1)
+	{	
+		if (arrs->b[0] < arrs->a[0] && arrs->b[0] > arrs->a[arrs->lenA - 1])
+			pa(arrs);
+		else
+			rotate(arrs);	
+	}
+	LastB(arrs);
+	while (checkSort(arrs) != 0)
+	{
+		if (checkSort(arrs) == 1)
+			ra(arrs);
+		else
+			rra(arrs);
+	}
+	return (0);
+}
+
+int altSort(t_arrs *arrs)
 {	
 	// while (semiSort(arrs) != 0)
 	// {		

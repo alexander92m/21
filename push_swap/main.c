@@ -7,26 +7,6 @@
 //make fclean && make && ./push_swap 5 4 7 6 9 8 3 2 1
 //make fclean && make && ./push_swap 19 10 12 13 15 14 17 16 11 18
 
-// arrs->a[0]=51319
-// arrs->a[1]=76380
-// arrs->a[2]=42958
-// arrs->a[3]=53121
-// arrs->a[4]=95039
-// arrs->a[5]=99550
-// arrs->a[6]=77792
-// arrs->a[7]=61027
-// arrs->a[8]=95008
-// arrs->a[9]=51538
-// arrs->a[10]=742
-// arrs->a[11]=50099
-// arrs->a[12]=61569
-// arrs->a[13]=95626
-// arrs->a[14]=34148
-// arrs->a[15]=25638
-// arrs->a[16]=54456
-// arrs->a[17]=16406
-
-
 //show arrays, must delete before push
 void show_arrays(t_arrs *arrs)
 {
@@ -60,6 +40,7 @@ static void initC(t_arrs *arrs)
 	arrs->lenC = arrs->lenA;
 	sortBubblesC(arrs);
 }
+
 //create started stacks(arrays)
 static t_arrs	*initS(int argc, char **argv)
 {
@@ -69,17 +50,11 @@ static t_arrs	*initS(int argc, char **argv)
 	if (arrs == NULL)
 		return NULL;
 	arrs->argc = argc;
-	// arrs->a = malloc((argc - 1) * sizeof(int));
-	// if (arrs->a == NULL)
-	// 	return NULL;
 	while (argc-- > 1)
 		arrs->a[argc - 1] = ft_atoi(argv[argc]);
 	arrs->lenA = arrs->argc - 1;
 	arrs->lenB = 0;
 	argc = arrs->argc;
-	// arrs->b = malloc((argc - 1) * sizeof(int));
-	// if (arrs->b == NULL)
-	// 	return NULL;
 	while (argc--)
 		arrs->b[argc] = 0;
 	arrs->cnts = 0;
@@ -99,15 +74,71 @@ int checkSort(t_arrs *arrs)
 		if (arrs->a[i] > arrs->a[i + 1])
 		{
 			if (i > arrs->lenA - i - 1)
-			{
 				return (-1);
-			}
 			else
-			{
 				return (1);
-			}
 		}
 		i++;
+	}
+	return (0);
+}
+
+int	ft_isminus(int c)
+{
+	if (c == '-')
+		return (1);
+	return (0);
+}
+
+int ft_rangeInt(char *s)
+{
+	int i;
+
+	i = -1;
+	if (ft_strlen(s) > 11)
+		return (0);
+	else if (ft_strlen(s) < 10 || (ft_strlen(s) == 10 && ft_isminus(s[0]) == 1))
+		return (1);
+	else if (ft_strlen(s) == 10 && ft_isminus(s[0]) == 0)
+	{
+		while (s[++i])
+			if (s[i] > "2147483647"[i])
+				return (0);
+	}
+	else if (ft_strlen(s) == 11 && ft_isminus(s[0]) == 1)
+	{
+		while (s[++i])
+			if (s[i] > "-2147483648"[i])
+				return (0);
+	}
+	return (1);
+}
+
+//its int? in range int? is doubles? if norm -> return 0
+int	errorCheck(int argc, char **argv, t_arrs *arrs)
+{
+	int	i;
+	int	j;
+	int	k;
+
+
+	i = 1;
+	while (i < argc)
+	{
+		j = -1;
+		while (argv[i][++j])
+			if (!(ft_isdigit(argv[i][j]) || ft_isminus(argv[i][j])))
+				return (1);
+		if (!ft_rangeInt(argv[i++]))
+			return (1);
+		j = -1;
+		while (++j < arrs->lenA)
+		{
+			k = -1;
+			while (++k < arrs->lenA)
+				if (arrs->a[j] == arrs->a[k] && j != k)
+					return (1);
+		}
 	}
 	return (0);
 }
@@ -117,12 +148,21 @@ int main(int argc, char **argv)
 {
 	t_arrs *arrs = NULL;
 	int i;
-	
+
 	i = 0;
 	arrs = initS(argc, argv);
-	sort(arrs);
-	// show_arrays(arrs);
-	// printf("if zero, that sorted %d\n", checkSort(arrs));
+	if (errorCheck(argc, argv, arrs))
+	{
+		write(1, "Error\n", 6);
+	}
+	else  if (argc != 1 && checkSort(arrs) != 0)
+	{
+		sort(arrs);
+		// printf("if zero, that sorted %d\n", checkSort(arrs));
+		// show_arrays(arrs);
+	}
+	free(arrs);
+	arrs = NULL;
 	return (0);
 }
 
